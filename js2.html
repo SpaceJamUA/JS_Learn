@@ -23,7 +23,7 @@ var Bot = arr[arr.length-1].slice();
 
 for (var z=1; z<arr.length-1; z++ ){
   Left.push(arr[z][0]);
-  Right.push(arr[z][arr.length-1]);
+  Right.push(arr[z][arr[z].length-1]);
 }
 
 result = result.concat(Top,Right,Bot.reverse(),Left.reverse());
