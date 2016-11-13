@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>xAtom</title>
+<script language="javascript" type="text/javascript">
+var arr=[];
+var Left=[];
+var Right=[];
+var result=[];
+function rand(min, max) {
+     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+for (var i=0; i<10; i++){
+  arr[i]=[];
+  for (var k=0; k<10; k++){
+    arr[i][k]=rand(0,100)
+  }
+}
+console.table(arr);
+
+var Top = arr[0].slice();
+var Bot = arr[arr.length-1].slice();
+
+for (var z=1; z<arr.length-1; z++ ){
+  Left.push(arr[z][0]);
+  Right.push(arr[z][arr[z].length-1]);
+}
+
+result = result.concat(Bot,Right.reverse(),Top.reverse(),Left);
+console.log(result);
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
