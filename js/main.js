@@ -2,7 +2,7 @@ var field = [];
 var width  =  +prompt('Введите ширину игрового поля' , '');
 var height =  +prompt('Введите высоту игрового поля' , '');
 
-function rand (min, max) {
+function rand(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
@@ -49,6 +49,7 @@ function hit(x, y){
     }
   }
 }
+
 function hasShips(){
   var result = 0;
   for (var i = 0; i < +width; i++){
@@ -60,28 +61,35 @@ function hasShips(){
   }
   return result;
 }
+
 var firstShip = 4;
 function putShip(){
-  for (var i = 0; i <= firstShip; i++){
+  for (firstShip;  firstShip >0 ; firstShip--){
     var x = rand(0,9);
     var y = rand(0,9);
-    if (field[x][y].ship = true || field[x-1][y].ship = true
-      || field[x+1][y].ship = true|| field[x][y-1].ship = true
-      || field[x][y+1].ship = true || field[x+1][y+1].ship = true || field[x-1][y-1].ship = true
-      || field[x-1][y+1].ship = true || field[x+1][y-1].ship = true){
+
+    if (field[x][y].ship == true
+      || field[x-1][y].ship == true
+      || field[x+1][y].ship == true
+      || field[x][y-1].ship == true
+      || field[x][y+1].ship == true
+      || field[x+1][y+1].ship == true
+      || field[x-1][y-1].ship == true
+      || field[x-1][y+1].ship == true
+      || field[x+1][y-1].ship == true){
         return putShip();
       } else {
         field[x][y].ship = true;
-        firstShip -= 1;
       }
     }
   }
 
-function getStatus(){
-  for (var i = 0; i < +width; i++){
-    for (var k=0; k < +height; k++){
-      if (field[i][k].ship == true){
-          console.log('На кординатах' + ' ' + i + ',' + k + 'есть ШИП')
+  function getStatus(){
+    for (var i = 0; i < +width; i++){
+      for (var k=0; k < +height; k++){
+        if (field[i][k].ship == true){
+          console.log('На кординатах' + ' ' + i + ',' + k + ' есть однопалубный ШИП')
+        }
       }
     }
-}
+  }
