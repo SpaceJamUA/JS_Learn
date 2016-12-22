@@ -183,10 +183,10 @@ function putOneShip(){
         if( x > 0 ){
           field[x-1][y].border = true;
         }
-        if( x < (width-1) && typeof field[x+1][y] == 'object' ){
+        if( x < (width-1) ){
           field[x+1][y].border = true;
         }
-        if(y > 0 ){
+        if( y > 0 ){
           field[x][y-1].border = true;
         }
         if(typeof field[x][y+1] == 'object' ){
@@ -201,7 +201,7 @@ function putOneShip(){
         if( x < (width-1) && typeof field[x+1][y+1] == 'object' ){
           field[x+1][y+1].border = true;
         }
-        if(y > 0 &&  x < (width-1) && typeof field[x+1][y-1] == 'object' ){
+        if(y > 0 &&  x < (width-1) ){
           field[x+1][y-1].border = true;
         }
       }
