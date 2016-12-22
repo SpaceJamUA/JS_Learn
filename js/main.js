@@ -158,65 +158,158 @@ function hasShips(){
 //           } while (firstShip > 0);
 //       }
 //
-// var twoShip = 3;
-// function putShipTwo(){
-//   do{
-//     var x = rand(0,9);
-//     var y = rand(0,9);
-//     var cord = rand(0,3);
-//     if(x == 0 && y == 0){
-//
-//
-//     }
-//   } while ( twoShip>0 );
-// }
 
-var oneShip = 10;
+
+var oneShip = 4;
 function putOneShip(){
 
-   do{
+  do{
     var  x = rand(0, width-1);
-     var y = rand(0, height-1);
-      if ( (field[x][y].ship == false) && (field[x][y].border == false) ){
+    var y = rand(0, height-1);
+    if ( (field[x][y].ship == false) && (field[x][y].border == false) ){
+      field[x][y].oneShip = true;
+      oneShip -= 1;
+      if( x > 0 ){
+        field[x-1][y].border = true;
+      }
+      if( x < (width-1) ){
+        field[x+1][y].border = true;
+      }
+      if( y > 0 ){
+        field[x][y-1].border = true;
+      }
+      if(typeof field[x][y+1] == 'object' ){
+        field[x][y+1].border = true;
+      }
+      if( y > 0 && x > 0 ){
+        field[x-1][y-1].border = true;
+      }
+      if(x > 0 && typeof field[x-1][y+1] == 'object' ){
+        field[x-1][y+1].border = true;
+      }
+      if( x < (width-1) && typeof field[x+1][y+1] == 'object' ){
+        field[x+1][y+1].border = true;
+      }
+      if(y > 0 &&  x < (width-1) ){
+        field[x+1][y-1].border = true;
+      }
+    }
+
+  } while (oneShip > 0)
+}
+
+var twoShip = 3;
+function putShipTwo(){
+  do{
+    var  x = rand(0, 9);
+    var y = rand(0, 9);
+    var way = rand(0,2);// 0 = x = right ______ 1 = y = down
+    if (way == 0){
+      if ( x < (width-1) && (field[x][y].ship == false) && (field[x][y].border == false)
+      && (field[x+1][y].ship == false) && (field[x+1][y].border == false)){
         field[x][y].ship = true;
-        oneShip -= 1;
+        field[x][y].twoShip = true;
+        field[x+1][y].ship = true;
+        field[x+1][y].twoShip = true;
+        twoShip -= 1;
         if( x > 0 ){
-          field[x-1][y].border = true;
+          field[x-1][y].border = true;// граница слева
         }
-        if( x < (width-1) ){
-          field[x+1][y].border = true;
-        }
+
         if( y > 0 ){
-          field[x][y-1].border = true;
+          field[x][y-1].border = true;// граница верх
         }
         if(typeof field[x][y+1] == 'object' ){
-          field[x][y+1].border = true;
+          field[x][y+1].border = true;// граница низ
         }
         if( y > 0 && x > 0 ){
-          field[x-1][y-1].border = true;
+          field[x-1][y-1].border = true;// граница левй верхний угол
         }
         if(x > 0 && typeof field[x-1][y+1] == 'object' ){
-          field[x-1][y+1].border = true;
+          field[x-1][y+1].border = true;// граница левый нижний угол
         }
-        if( x < (width-1) && typeof field[x+1][y+1] == 'object' ){
-          field[x+1][y+1].border = true;
+        if( typeof field[x+1][y+1] == 'object' ){
+          field[x+1][y+1].border = true;// граница правый нижний угол
         }
-        if(y > 0 &&  x < (width-1) ){
-          field[x+1][y-1].border = true;
+        if(y > 0){
+          field[x+1][y-1].border = true;// граница правый верхний угол
+        }//asdkhjaskdhajsdhajsas
+        if( x > 0 && x < width-2){
+          field[x+2][y].border = true;// граница справа Второй ячейки
+        }
+        if( y > 0 && x > 0 && x < width-2){
+          field[x+2][y-1].border = true;// граница правый верхний угол второй ячейки
+        }
+        if(x > 0 && x < width-2 && typeof field[x+2][y+1] == 'object' ){
+          field[x+2][y+1].border = true;// граница правый нижний угол второй ячейки
         }
       }
+    } else {
+      if ( y < (height-1) && (field[x][y].ship == false) && (field[x][y].border == false)
+      && (field[y+1][y].ship == false) && (field[y+1][y].border == false)){
+        field[x][y].ship = true;
+        field[x][y].twoShip = true;
+        field[x][y+1].ship = true;
+        field[x][y+1].twoShip = true;
+        twoShip -= 1;
+        if( x > 0 ){
+          field[x-1][y].border = true;// граница слева
+        }
+        if( y > 0 ){
+          field[x][y-1].border = true;// граница верх
+        }
+        if(x<(width-2)){
+          field[x+1][y].border = true;// граница права
+        }
+        if( y > 0 && x > 0 ){
+          field[x-1][y-1].border = true;// граница левй верхний угол
+        }
+        if(x > 0  ){
+          field[x-1][y+1].border = true;// граница левый нижний угол
+        }
+        if( x < (width-2) ){
+          field[x+1][y+1].border = true;// граница правый нижний угол
+        }
+        if(x < (width-2) && typeof field[x+1][y-1] == 'object'){
+          field[x+1][y-1].border = true;// граница правый верхний угол
+        }//asdkhjaskdhajsdhajsas
+        if( x < (width-2) && typeof field[x+1][y+2] == 'object'){
+          field[x+1][y+2].border = true;// граница правый нижний угол Второй ячейки
+        }
+        if(x > 0 && typeof  field[x-1][y+2] == 'object'){
+          field[x-1][y+2].border = true;// граница левый нижний угол второй ячейки
+        }
+        if(typeof field[x][y+2] == 'object' ){
+          field[x][y+2].border = true;// граница  низ второй ячейки
+        }
 
-   } while (oneShip > 0)
+      }
+    }
+ }while (twoShip > 0);
+ return putOneShip();
+}
+
+function getOneStatus(){
+  for (var i = 0; i < +width; i++){
+    for (var k=0; k < +height; k++){
+      if (field[i][k].oneShip == true){
+        field[i][k] = 1;
+      }
+    }
+  }
+}
+function getTwoStatus(){
+  for (var i = 0; i < +width; i++){
+    for (var k=0; k < +height; k++){
+      if (field[i][k].twoShip == true){
+        field[i][k] = 2;
+
+      }
+    }
+  }
 }
 
 
-
-      function getStatus(){
-        for (var i = 0; i < +width; i++){
-          for (var k=0; k < +height; k++){
-            if (field[i][k].ship == true){
-              console.log('На кординатах' + ' ' + i + ',' + k + ' есть однопалубный ШИП')
-            }
-          }
-        }
-      }
+function putAll(){
+  return putShipTwo();
+}
