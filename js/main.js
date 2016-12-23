@@ -164,8 +164,8 @@ var oneShip = 4;
 function putOneShip(){
 
   do{
-    var  x = rand(0, width-1);
-    var y = rand(0, height-1);
+    var  x = rand(0, width);
+    var y = rand(0, height);
     if ( (field[x][y].ship == false) && (field[x][y].border == false) ){
       field[x][y].oneShip = true;
       oneShip -= 1;
@@ -201,8 +201,8 @@ function putOneShip(){
 var twoShip = 3;
 function putShipTwo(){
   do{
-    var  x = rand(0, 9);
-    var y = rand(0, 9);
+    var  x = rand(0, width);
+    var y = rand(0, height);
     var way = rand(0,2);// 0 = x = right ______ 1 = y = down
     if (way == 0){
       if ( x < (width-1) && (field[x][y].ship == false) && (field[x][y].border == false)
@@ -289,27 +289,33 @@ function putShipTwo(){
  return putOneShip();
 }
 
-function getOneStatus(){
+
+function showAll(){
   for (var i = 0; i < +width; i++){
     for (var k=0; k < +height; k++){
-      if (field[i][k].oneShip == true){
-        field[i][k] = 1;
-      }
-    }
-  }
-}
-function getTwoStatus(){
-  for (var i = 0; i < +width; i++){
-    for (var k=0; k < +height; k++){
-      if (field[i][k].twoShip == true){
+        if (field[i][k].twoShip == true){
         field[i][k] = 2;
-
+        }
+        if (field[i][k].oneShip == true){
+          field[i][k] = 1;
+        }
       }
     }
+    console.table(field);
   }
+function showBoard(){
+  for (var i = 0; i < +width; i++){
+    for (var k=0; k < +height; k++){
+       if (field[i][k].border == true){
+          field[i][k] = 'border';
+   }
+  }
+ }
 }
-
-
 function putAll(){
   return putShipTwo();
 }
+
+putAll();
+showBoard();
+showAll();
