@@ -1,11 +1,9 @@
 var field = [];
-var sizeBoard =  +prompt('Введите ширину игрового поля' , '');
-
-
+// var sizeBoard =  +prompt('Введите ширину игрового поля' , '');
+var sizeBoard = 10;
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
-
 (function(){
   for (var i = 0; i < sizeBoard; i++){
     field[i]=[];
@@ -21,51 +19,8 @@ function rand(min, max) {
   return field;
 }(sizeBoard));
 console.table(field);
-
-function setMsg(x, y){
-  if (x>width || y>height || x<0 || y<0){
-    alert('error');
-  } else {
-    field[x][y].msg = prompt('Ввeдите коментарий для этой ячейки', '');
-  }
-}
-
-function hit(x, y){
-  if (x>width || y>height || x<0 || y<0){
-    alert('error');
-  } else {
-    field[x][y].opened = true;
-    if (field[x][y].ship == true){
-      field[x][y].ship = false;
-      field[x][y].msg = 'Убит';
-      alert('ВЫ ПОПАЛИ! ХОРОШИЙ ВЫСТРЕЛ КОМАНДОР');
-    } else if(  field[x][y].msg == 'Убит'){
-      alert('Вы уже стреляли в этот квадрат и попали');
-    } else if(field[x][y].msg == 'missed'){
-      field[x][y].msg = 'Вы уже стреляли в этот квадрат и промахнулись';
-      alert('Промахнулись');
-    } else {
-      alert('Вы уже стреляли в этот квадрат и промахнулись');
-    }
-  }
-}
-
-function hasShips(){
-  var result = 0;
-  for (var i = 0; i < +width; i++){
-    for (var k=0; k < +height; k++ ){
-      if (field[i][k].ship == true){
-        result+=1;
-      }
-    }
-  }
-  return result;
-}
-
-
 var oneShip = 4;
 function putShipOne(){
-
   do{
     var  x = rand(0, sizeBoard);
     var y = rand(0, sizeBoard);
@@ -98,17 +53,11 @@ function putShipOne(){
         field[x+1][y-1].border = true;
       }
     }
-
   } while (oneShip > 0)
 }
-
-
-
 var twoShip = 3;
-
 function putShipTwo(){
   do{
-
     var  vertical = rand(0, sizeBoard);
     var  horizontal = rand(0, sizeBoard);
     var  way = rand(0,2);// 0 = x = right ______ 1 = y = down
@@ -118,13 +67,11 @@ function putShipTwo(){
       && field[vertical][horizontal].border == false
       && field[vertical+1][horizontal].ship == false
       && field[vertical+1][horizontal].border == false){
-
         field[vertical][horizontal].ship = true;
         field[vertical+1][horizontal].ship = true;
         field[vertical][horizontal].twinShip = true;
         field[vertical+1][horizontal].twinShip = true;
         twoShip -= 1;
-
         if(typeof field[vertical+1][horizontal-1] == 'object'){// Низ лево
           field[vertical+1][horizontal-1].border = true;
         }
@@ -167,7 +114,6 @@ function putShipTwo(){
         field[vertical][horizontal].twinShip = true;
         field[vertical][horizontal+1].twinShip = true;
         twoShip -= 1;
-
         if(vertical < sizeBoard - 1){// низ право
           field[vertical+1][horizontal+1].border = true;
         }
@@ -202,13 +148,9 @@ function putShipTwo(){
     }
   } while (twoShip > 0);
 }
-
-
 var threeShip = 2;
-
 function putShipThree(){
   do{
-
     var  vertical = rand(0, sizeBoard);
     var  horizontal = rand(0, sizeBoard);
     var  way = rand(0,2);// 0 = x = right ______ 1 = y = down
@@ -266,63 +208,63 @@ function putShipThree(){
           field[vertical+3][horizontal+1].border = true;
         }
       }
-   } else {
-     if ((horizontal < sizeBoard-2)
-     && field[vertical][horizontal].ship == false
-     && field[vertical][horizontal].border == false
-     && field[vertical][horizontal+1].ship == false
-     && field[vertical][horizontal+1].border == false
-     && field[vertical][horizontal+2].ship == false
-     && field[vertical][horizontal+2].border == false){
+    } else {
+      if ((horizontal < sizeBoard-2)
+      && field[vertical][horizontal].ship == false
+      && field[vertical][horizontal].border == false
+      && field[vertical][horizontal+1].ship == false
+      && field[vertical][horizontal+1].border == false
+      && field[vertical][horizontal+2].ship == false
+      && field[vertical][horizontal+2].border == false){
 
-       field[vertical][horizontal].ship = true;
-       field[vertical][horizontal+1].ship = true;
-       field[vertical][horizontal+2].ship = true;
-       field[vertical][horizontal].threeShip = true;
-       field[vertical][horizontal+1].threeShip = true;
-       field[vertical][horizontal+2].threeShip = true;
-       threeShip -= 1;
+        field[vertical][horizontal].ship = true;
+        field[vertical][horizontal+1].ship = true;
+        field[vertical][horizontal+2].ship = true;
+        field[vertical][horizontal].threeShip = true;
+        field[vertical][horizontal+1].threeShip = true;
+        field[vertical][horizontal+2].threeShip = true;
+        threeShip -= 1;
 
-       if(vertical < sizeBoard - 1){// низ право
-         field[vertical+1][horizontal+1].border = true;
-       }
-       if(vertical < sizeBoard - 1 ){//низ
-         field[vertical+1][horizontal].border = true;
-       }
-       if((vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal-1] == 'object' ){//низ лево
-         field[vertical+1][horizontal-1].border = true;
-       }
-       if(typeof field[vertical][horizontal-1] == 'object' ){// лево
-         field[vertical][horizontal-1].border = true;
-       }
-       if((vertical > 0 ) && typeof field[vertical-1][horizontal-1] == 'object' ){// лево верх
-         field[vertical-1][horizontal-1].border = true;
-       }
-       if(vertical > 0 ){//  верх
-         field[vertical-1][horizontal].border = true;
-       }
-       if(vertical > 0 ){//  верх право
-         field[vertical-1][horizontal+1].border = true;
-       }
-       if(vertical > 0 && typeof field[vertical-1][horizontal+2] == 'object' ){// верх верх право
-         field[vertical-1][horizontal+2].border = true;
-       }
-       if( (vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal+2] == 'object' ){// низ низ право
-         field[vertical+1][horizontal+2].border = true;
-       }
-       if( (vertical > 0 ) && typeof field[vertical-1][horizontal+3] == 'object' ){// верх право право право
-         field[vertical-1][horizontal+3].border = true;
-       }
-       if( typeof field[vertical][horizontal+3] == 'object' ){// право право право
-         field[vertical][horizontal+3].border = true;
-       }
-       if( (vertical < sizeBoard - 1 ) && typeof field[vertical+1][horizontal+3] == 'object' ){// низ право право право
-         field[vertical+1][horizontal+3].border = true;
-       }
+        if(vertical < sizeBoard - 1){// низ право
+           field[vertical+1][horizontal+1].border = true;
+        }
+        if(vertical < sizeBoard - 1 ){//низ
+          field[vertical+1][horizontal].border = true;
+        }
+        if((vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal-1] == 'object' ){//низ лево
+          field[vertical+1][horizontal-1].border = true;
+        }
+        if(typeof field[vertical][horizontal-1] == 'object' ){// лево
+          field[vertical][horizontal-1].border = true;
+        }
+        if((vertical > 0 ) && typeof field[vertical-1][horizontal-1] == 'object' ){// лево верх
+          field[vertical-1][horizontal-1].border = true;
+        }
+        if(vertical > 0 ){//  верх
+          field[vertical-1][horizontal].border = true;
+        }
+        if(vertical > 0 ){//  верх право
+          field[vertical-1][horizontal+1].border = true;
+        }
+        if(vertical > 0 && typeof field[vertical-1][horizontal+2] == 'object' ){// верх верх право
+          field[vertical-1][horizontal+2].border = true;
+        }
+        if( (vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal+2] == 'object' ){// низ низ право
+          field[vertical+1][horizontal+2].border = true;
+        }
+        if( (vertical > 0 ) && typeof field[vertical-1][horizontal+3] == 'object' ){// верх право право право
+          field[vertical-1][horizontal+3].border = true;
+        }
+        if( typeof field[vertical][horizontal+3] == 'object' ){// право право право
+          field[vertical][horizontal+3].border = true;
+        }
+        if( (vertical < sizeBoard - 1 ) && typeof field[vertical+1][horizontal+3] == 'object' ){// низ право право право
+          field[vertical+1][horizontal+3].border = true;
+        }
 
-     }
-   }
- } while (threeShip > 0);
+      }
+    }
+  } while (threeShip > 0);
 }
 
 var fourShip = 1;
@@ -397,108 +339,99 @@ function putShipFour(){
           field[vertical+4][horizontal-1].border = true;
         }
       }
-   } else {
-     if ((horizontal < sizeBoard-3)
-     && field[vertical][horizontal].ship == false
-     && field[vertical][horizontal].border == false
-     && field[vertical][horizontal+1].ship == false
-     && field[vertical][horizontal+1].border == false
-     && field[vertical][horizontal+2].ship == false
-     && field[vertical][horizontal+2].border == false
-     && field[vertical][horizontal+3].ship == false
-     && field[vertical][horizontal+3].border == false){
+    } else {
+      if ((horizontal < sizeBoard-3)
+      && field[vertical][horizontal].ship == false
+      && field[vertical][horizontal].border == false
+      && field[vertical][horizontal+1].ship == false
+      && field[vertical][horizontal+1].border == false
+      && field[vertical][horizontal+2].ship == false
+      && field[vertical][horizontal+2].border == false
+      && field[vertical][horizontal+3].ship == false
+      && field[vertical][horizontal+3].border == false){
 
-       field[vertical][horizontal].ship = true;
-       field[vertical][horizontal+1].ship = true;
-       field[vertical][horizontal+2].ship = true;
-       field[vertical][horizontal+3].ship = true;
-       field[vertical][horizontal].fourShip = true;
-       field[vertical][horizontal+1].fourShip = true;
-       field[vertical][horizontal+2].fourShip = true;
-       field[vertical][horizontal+3].fourShip = true;
-       fourShip -= 1;
+        field[vertical][horizontal].ship = true;
+        field[vertical][horizontal+1].ship = true;
+        field[vertical][horizontal+2].ship = true;
+        field[vertical][horizontal+3].ship = true;
+        field[vertical][horizontal].fourShip = true;
+        field[vertical][horizontal+1].fourShip = true;
+        field[vertical][horizontal+2].fourShip = true;
+        field[vertical][horizontal+3].fourShip = true;
+        fourShip -= 1;
 
-       if(vertical < sizeBoard - 1){// низ право
-         field[vertical+1][horizontal+1].border = true;
-       }
-       if(vertical < sizeBoard - 1 ){//низ
-         field[vertical+1][horizontal].border = true;
-       }
-       if((vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal-1] == 'object' ){//низ лево
-         field[vertical+1][horizontal-1].border = true;
-       }
-       if(typeof field[vertical][horizontal-1] == 'object' ){// лево
-         field[vertical][horizontal-1].border = true;
-       }
-       if((vertical > 0 ) && typeof field[vertical-1][horizontal-1] == 'object' ){// лево верх
-         field[vertical-1][horizontal-1].border = true;
-       }
-       if(vertical > 0 ){//  верх
-         field[vertical-1][horizontal].border = true;
-       }
-       if(vertical > 0 ){//  верх право
-         field[vertical-1][horizontal+1].border = true;
-       }
-       if(vertical > 0 && typeof field[vertical-1][horizontal+2] == 'object' ){// верх верх право
-         field[vertical-1][horizontal+2].border = true;
-       }
-       if( (vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal+2] == 'object' ){// низ низ право
-         field[vertical+1][horizontal+2].border = true;
-       }
-       if( (vertical > 0 ) && typeof field[vertical-1][horizontal+3] == 'object' ){// верх право право право
-         field[vertical-1][horizontal+3].border = true;
-       }
+        if(vertical < sizeBoard - 1){// низ право
+          field[vertical+1][horizontal+1].border = true;
+        }
+        if(vertical < sizeBoard - 1 ){//низ
+          field[vertical+1][horizontal].border = true;
+        }
+        if((vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal-1] == 'object' ){//низ лево
+          field[vertical+1][horizontal-1].border = true;
+        }
+        if(typeof field[vertical][horizontal-1] == 'object' ){// лево
+          field[vertical][horizontal-1].border = true;
+        }
+        if((vertical > 0 ) && typeof field[vertical-1][horizontal-1] == 'object' ){// лево верх
+          field[vertical-1][horizontal-1].border = true;
+        }
+        if(vertical > 0 ){//  верх
+          field[vertical-1][horizontal].border = true;
+        }
+        if(vertical > 0 ){//  верх право
+          field[vertical-1][horizontal+1].border = true;
+        }
+        if(vertical > 0 && typeof field[vertical-1][horizontal+2] == 'object' ){// верх верх право
+          field[vertical-1][horizontal+2].border = true;
+        }
+        if( (vertical < sizeBoard - 1) && typeof field[vertical+1][horizontal+2] == 'object' ){// низ низ право
+          field[vertical+1][horizontal+2].border = true;
+        }
+        if( (vertical > 0 ) && typeof field[vertical-1][horizontal+3] == 'object' ){// верх право право право
+          field[vertical-1][horizontal+3].border = true;
+        }
         if( (vertical < sizeBoard - 1 ) && typeof field[vertical+1][horizontal+3] == 'object' ){// низ право право право
-         field[vertical+1][horizontal+3].border = true;
-       }
-       if( (vertical >0 ) && typeof field[vertical-1][horizontal+4] == 'object' ){// верх право право право право
-        field[vertical-1][horizontal+4].border = true;
+          field[vertical+1][horizontal+3].border = true;
+        }
+        if( (vertical >0 ) && typeof field[vertical-1][horizontal+4] == 'object' ){// верх право право право право
+          field[vertical-1][horizontal+4].border = true;
+        }
+        if( typeof field[vertical][horizontal+4] == 'object' ){//  право право право право
+          field[vertical][horizontal+4].border = true;
+        }
+        if( (vertical < sizeBoard - 1 ) && typeof field[vertical+1][horizontal+4] == 'object' ){//  право право право право низ
+          field[vertical+1][horizontal+4].border = true;
+        }
       }
-      if( typeof field[vertical][horizontal+4] == 'object' ){//  право право право право
-       field[vertical][horizontal+4].border = true;
-     }
-     if( (vertical < sizeBoard - 1 ) && typeof field[vertical+1][horizontal+4] == 'object' ){//  право право право право низ
-      field[vertical+1][horizontal+4].border = true;
     }
-
-     }
-   }
- } while (fourShip > 0);
+  } while (fourShip > 0);
 }
 
 
-function showAll(){
-  for (var i = 0; i < sizeBoard; i++){
-    for (var k=0; k < sizeBoard; k++){
-      if (field[i][k].twinShip == true){
-        field[i][k] = 2;
-      }
-      if (field[i][k].oneShip == true){
-        field[i][k] = 1;
-      }
-      if (field[i][k].threeShip == true){
-        field[i][k] = 3;
-      }
-      if (field[i][k].fourShip == true){
-        field[i][k] = 4;
-      }
-    }
+function hit(vertical, horizontal){
   }
-  console.table(field);
-}
 
-function showBoard(){
-  for (var i = 0; i < sizeBoard; i++){
-    for (var k=0; k < sizeBoard; k++){
-      if (field[i][k].border == true){
-        field[i][k] = 'border';
-      }
-    }
-  }
-}
 putShipFour();
 putShipThree();
 putShipTwo();
 putShipOne();
-showBoard();
-showAll();
+
+
+
+
+var battleBody = document.querySelector('#battle-body');
+var fieldTable = '<table border="1">\n';
+
+for ( var i = 0; i < 10; i++){
+  fieldTable += '<tr>\n';
+  for(var j = 0; j < 10; j++){
+    if(field[i][j].ship == true){
+    fieldTable += '\t<td class="ship"></td>\n'
+  } else {
+    fieldTable += '\t<td></td>\n'
+  }
+ }
+  fieldTable += '</tr>\n'
+}
+fieldTable += '</table>\n'
+battleBody.innerHTML = fieldTable;
