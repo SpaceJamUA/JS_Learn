@@ -4,6 +4,7 @@ var sizeBoard = 10;
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
+
 (function(){
   for (var i = 0; i < sizeBoard; i++){
     field[i]=[];
@@ -18,6 +19,7 @@ function rand(min, max) {
   }
   return field;
 }(sizeBoard));
+
 console.table(field);
 var oneShip = 4;
 function putShipOne(){
@@ -406,32 +408,3 @@ function putShipFour(){
     }
   } while (fourShip > 0);
 }
-
-
-function hit(vertical, horizontal){
-  }
-
-putShipFour();
-putShipThree();
-putShipTwo();
-putShipOne();
-
-
-
-
-var battleBody = document.querySelector('#battle-body');
-var fieldTable = '<table border="1">\n';
-
-for ( var i = 0; i < 10; i++){
-  fieldTable += '<tr>\n';
-  for(var j = 0; j < 10; j++){
-    if(field[i][j].ship == true){
-    fieldTable += '\t<td class="ship"></td>\n'
-  } else {
-    fieldTable += '\t<td></td>\n'
-  }
- }
-  fieldTable += '</tr>\n'
-}
-fieldTable += '</table>\n'
-battleBody.innerHTML = fieldTable;
