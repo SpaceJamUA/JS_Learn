@@ -290,13 +290,14 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
 
 
     function hit(vertical, horizontal){
+      // debugger;
       if(field[vertical][horizontal].ship){
         field[vertical][horizontal].openStatus = true;
 
         for(var i = -1; i <=1; i+=2){
           for(var j = -1; j <=1; j+=2){
-            if(vertical-1 >= 0 && vertical+1 < SIZE_BOARD
-              && horizontal-1 >= 0 && horizontal+1 < SIZE_BOARD){
+            if(vertical+i >= 0 && vertical+i < SIZE_BOARD
+              && horizontal+j >= 0 && horizontal+j < SIZE_BOARD){
                 field[vertical+i][horizontal+j].openStatus = true;
               }
             }
