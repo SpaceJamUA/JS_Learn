@@ -1,6 +1,35 @@
 var table = document.createElement('table');
 var SIZE_BOARD = 10;
 var field = [];
+var seaArmy = [[],[],[],[],[],[],[],[],[],[]];
+var countWar = 0;
+var liveShip = 10;
+
+var button = document.createElement('button');
+button.textContent = 'Auto Arrangement';
+document.body.appendChild(button);
+
+button.addEventListener('click', putShipRandom);
+
+function pushinka() {
+  for(var i = 0; i<10; i++){
+    for(var k = 0; k < 10; k++){
+      for(var z = 0; z < countWar; z++){
+        if(field[i][k].count == z){
+          seaArmy[z].push(field[i][k]);
+        }
+      }
+    }
+  }
+  for(var i = 0; i < 10; i++){
+    for(var j = 0; j < seaArmy[i].length; j++){
+      seaArmy[i][j].absoluteBorder = seaArmy[i][0].absoluteBorder;
+    }
+  }
+}
+
+
+
 
 var SHIP_STATUS = {
   typeShipOne : {
@@ -28,7 +57,8 @@ function buildField(){
       field[i][k] = {
         border: false,
         ship : false,
-        openStatus : false
+        openStatus : false,
+        absoluteBorder : [[],[]]
       }
     }
   }
@@ -56,7 +86,8 @@ function createShipOne(vertical,horizontal){
   && (field[vertical][horizontal].border == false) ){
     SHIP_STATUS.typeShipOne.freeShips -= 1;
     field[vertical][horizontal].ship = true;
-
+    field[vertical][horizontal].count = countWar;
+    countWar+=1;
     var borderHorizontal = [-1,-1,0,1,1,1,0,-1];
     var borderVertical = [0,-1,-1,-1,0,1,1,1];
 
@@ -84,8 +115,11 @@ function createShipTwoVertical(vertical, horizontal){  //vertical ship
   && field[vertical+1][horizontal].ship == false
   && field[vertical+1][horizontal].border == false){
 
-    field[vertical][horizontal].ship = true;
-    field[vertical+1][horizontal].ship = true;
+    for (var i = 0; i < 2; i++){
+      field[vertical+i][horizontal].ship = true;
+      field[vertical+i][horizontal].count = countWar;
+    }
+    countWar+=1;
 
     SHIP_STATUS.typeShipTwo.freeShips -= 1;
 
@@ -102,8 +136,12 @@ function createShipTwoHorizontal(vertical, horizontal){  //horizontal ship
   && field[vertical][horizontal].border == false
   && field[vertical][horizontal+1].ship == false
   && field[vertical][horizontal+1].border == false){
-    field[vertical][horizontal].ship = true;
-    field[vertical][horizontal+1].ship = true;
+
+    for (var i = 0; i < 2; i++){
+      field[vertical][horizontal+i].ship = true;
+      field[vertical][horizontal+i].count = countWar;
+    }
+    countWar+=1;
 
     SHIP_STATUS.typeShipTwo.freeShips -= 1;
 
@@ -136,10 +174,11 @@ function createShipThreeHizontal(vertical, horizontal){  //vertical ship
   && field[vertical][horizontal+2].border == false){
 
 
-
-    field[vertical][horizontal].ship = true;
-    field[vertical][horizontal+1].ship = true;
-    field[vertical][horizontal+2].ship = true;
+    for (var i = 0; i < 3; i++){
+      field[vertical][horizontal+i].ship = true;
+      field[vertical][horizontal+i].count = countWar;
+    }
+    countWar+=1;
 
     SHIP_STATUS.typeShipThree.freeShips -= 1;
 
@@ -159,9 +198,11 @@ function createShipThreeVertical(vertical, horizontal){
   && field[vertical+2][horizontal].ship == false
   && field[vertical+2][horizontal].border == false){
 
-    field[vertical][horizontal].ship = true;
-    field[vertical+1][horizontal].ship = true;
-    field[vertical+2][horizontal].ship = true;
+    for (var i = 0; i < 3; i++){
+      field[vertical+i][horizontal].ship = true;
+      field[vertical+i][horizontal].count = countWar;
+    }
+    countWar+=1;
 
     SHIP_STATUS.typeShipThree.freeShips -= 1;
 
@@ -198,10 +239,11 @@ function createShipFourVertical(vertical, horizontal){
   && field[vertical+3][horizontal].ship == false
   && field[vertical+3][horizontal].border == false){
 
-    field[vertical][horizontal].ship = true;
-    field[vertical+1][horizontal].ship = true;
-    field[vertical+2][horizontal].ship = true;
-    field[vertical+3][horizontal].ship = true;
+    for (var i = 0; i < 4; i++){
+      field[vertical+i][horizontal].ship = true;
+      field[vertical+i][horizontal].count = countWar;
+    }
+    countWar+=1;
 
     SHIP_STATUS.typeShipFour.freeShips -= 1;
 
@@ -223,11 +265,11 @@ function createShipFourHorizontal(vertical, horizontal){
   && field[vertical][horizontal+3].ship == false
   && field[vertical][horizontal+3].border == false){
 
-    field[vertical][horizontal].ship = true;
-    field[vertical][horizontal+1].ship = true;
-    field[vertical][horizontal+2].ship = true;
-    field[vertical][horizontal+3].ship = true;
-
+    for (var i = 0; i < 4; i++){
+      field[vertical][horizontal+i].ship = true;
+      field[vertical][horizontal+i].count = countWar;
+    }
+    countWar+=1;
     SHIP_STATUS.typeShipFour.freeShips -= 1;
 
     var borderHorizontal = [-1,-1,0,1,2,3,4,4,4,3,2,1,0,-1];
@@ -245,6 +287,8 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
       && actingHorizontalBoard <= (field.length-1)
       && actingVerticalBoard <= (field.length-1)) {
         field[actingVerticalBoard][actingHorizontalBoard].border = true;
+        field[vertical][horizontal].absoluteBorder[0].push(actingVerticalBoard);
+        field[vertical][horizontal].absoluteBorder[1].push(actingHorizontalBoard);
       }
     }
     createFieldBattle();
@@ -258,6 +302,8 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
       var tr = document.createElement('tr');
       for (var j = 0 ; j < SIZE_BOARD; j++){
         var td = document.createElement('td');
+        td.dataset.vertical = i;
+        td.dataset.horizontal = j;
         if (field[i][j].ship && field[i][j].openStatus){
           td.classList = 'seaShipElementShow';
           tr.appendChild(td);
@@ -282,6 +328,7 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
       putShip(rand(1, 4),rand(0, 9),rand(0, 9),rand(0,1))
     } while(SHIP_STATUS.typeShipOne.freeShips || SHIP_STATUS.typeShipTwo.freeShips
       || SHIP_STATUS.typeShipThree.freeShips || SHIP_STATUS.typeShipFour.freeShips);
+      return pushinka();
     }
 
     function rand(min, max) {
@@ -290,7 +337,6 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
 
 
     function hit(vertical, horizontal){
-      // debugger;
       if(field[vertical][horizontal].ship){
         field[vertical][horizontal].openStatus = true;
 
@@ -302,8 +348,48 @@ function createBorder(vertical, horizontal,borderHorizontal,borderVertical){
               }
             }
           }
+
+        checkHit(vertical, horizontal);
+
         } else {
           field[vertical][horizontal].openStatus = true;
         }
+
         createFieldBattle();
+      }
+
+
+      function clickHit(ev){
+        var vertical = +ev.target.dataset.vertical;
+        var horizontal = +ev.target.dataset.horizontal;
+        // var ok = field[vertical][horizontal].count;
+        // if(typeof ok != 'undefined'){
+        //   console.log(ok);
+        // }
+
+        hit(vertical,horizontal);
+      }
+
+      table.addEventListener('click', clickHit);
+
+      function checkHit(vertical, horizontal){
+        for(var i = 0; i < seaArmy[field[vertical][horizontal].count].length; i++){
+          if(!seaArmy[field[vertical][horizontal].count][i].openStatus){
+            return
+          }
+        }
+        for (var i = 0; i < field[vertical][horizontal].absoluteBorder[0].length; i++) {
+          field[field[vertical][horizontal].absoluteBorder[0][i]][field[vertical][horizontal].absoluteBorder[1][i]].openStatus = true;
+        }
+        liveShip -= 1;
+        if(!liveShip){
+          alert('Game Over');
+          for(var i = 0; i < SIZE_BOARD; i++){
+            for(var j = 0; j < SIZE_BOARD; j++){
+              field[i][j].openStatus = true;
+            }
+          }
+          createFieldBattle();
+        }
+
       }
