@@ -212,11 +212,25 @@ var LOGIC_PART = {
         for (var i = 0; i < this.field[vertical][horizontal].absoluteBorder[0].length; i++) {
           this.field[this.field[vertical][horizontal].absoluteBorder[0][i]][this.field[vertical][horizontal].absoluteBorder[1][i]].openStatus = true;
         }
-        console.log(this.name+ '  ' + this.marineArmy.liveShips);
-          this.createFieldBattle();
+        this.createFieldBattle();
+
+        if(!this.marineArmy.liveShips){
+          this.gameOver();
+        }
+      },
+      gameOver: function() {
+        if(this.player){
+          alert('Вы проиграли');
+        }else{
+          alert('Вы победили');
+        }
+        for(i = 0; i < this.SIZE_BOARD; i++){
+          for(k = 0; k < this.SIZE_BOARD; k++){
+            this.field[i][k].openStatus = true;
+          }
+        }
+        this.createFieldBattle();
       }
-
-
     }
 
 
@@ -288,7 +302,7 @@ var LOGIC_PART = {
 
 
     var player = new SeaBattle('player', true);
-    var machineBrain = new SeaBattle('machineBrainShow');
+    var machineBrain = new SeaBattle('machineBrainShow', false);
 
     (function functionName() {
 
