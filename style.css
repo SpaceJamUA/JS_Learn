@@ -1,0 +1,55 @@
+table{
+  border: 1px solid;
+  height: 400px;
+  width: 400px;
+  border-collapse: collapse;
+  margin-top: 5%;
+  opacity: 0.7;
+  background-color: rgb(99, 86, 105)
+}
+tr, td{
+  border: 1px solid;
+}
+
+.seaElement, .seaShipElement {
+  background: #00FFFF;
+  cursor: pointer;
+
+}
+.seaElementShow{
+  background: #4682B4;
+}
+.seaShipElementShow{
+  background-color: #47ba25;
+}
+
+.seaShipElementHit{
+  background-color: rgb(201, 37, 25);
+}
+.machineBrainShow{
+  float: right;
+  margin-right: 5%;
+}
+.machineBrain{
+  display: none;
+}
+.player{
+  float: left;
+  margin-left: 5%;
+}
+body {
+  background: url(http://inarena.ru/wp-content/uploads/2015/10/%D0%93%D0%B0%D0%B9%D0%B4-world-of-warships-%D0%BA%D0%B0%D0%BA-%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C%D1%81%D1%8F-%D0%BD%D0%B0-%D0%B2%D0%B5%D1%82%D1%80%D1%83-%D0%B0%D1%80%D1%82-1.jpg) no-repeat;
+  background-size: 100%; /* Современные браузеры */
+}
+
+.restartGame{
+  display: none;
+}
+.hideInterface{
+  display: none;
+}
+.interface{
+  display: block;
+  width: 200px;
+  height: 100px;
+}
