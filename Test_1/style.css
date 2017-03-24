@@ -1,11 +1,10 @@
 .registrationForm{
-  width: 400px;
-  height: 340px;
-  margin-left: auto;
-  margin-right: auto;
   border: 1px solid #b9b9b9;
-  margin-top: 50px;
   border-radius: 4px;
+  margin-top: 50px;
+  padding-left: 0px;
+  padding-right: 0px;
+  height: 380px;
 }
 .signUp{
   height: 25px;
@@ -14,19 +13,80 @@
   background: #e4e4e4;
   border-bottom:1px solid #b9b9b9;
 }
- .registrationFields{
-   width: 350px;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 15px;
- }
+.registrationFields{
+  margin-top: 20px;
+}
 .selectField{
   height: 30px;
   color: #878787;
   font-size: 12px;
 }
 .radioBtnReg{
-  margin-left: 25px;
   margin-top: 15px;
   color: #878787;
+}
+.mainContent{
+  margin-top: 40px;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sendFormReg{
+  float: right;
+  width: 100px;
+  background-color: #e4e4e4;
+}
+.textError{
+  font-size: 12px;
+  position: absolute;
+  margin-top: 2px;
+  color: #ff0000
+}
+.errorField{
+  color: #f40000;
+}
+.mainClass{
+  height: 250px;
+}
+.downloadContent{
+  border: 1px solid;
+  height: 230px;
+  border: 1px solid  #b9b9b9;
+}
+.header{
+  height: 22px;
+  background: #e4e4e4;
+  font-size: 15px;
+  border-bottom:1px solid #b9b9b9;
+  text-indent: 15px;
+}
+.contentBody{
+  position: static;
+  width: inherit;
+  height: inherit;
+}
+.loadingSrc{
+  position: relative;
+  margin-left: calc(50% - 25px);
+  width: 50px;
+  margin-top: 70px;
+}
+.circle {
+  width: 150px;
+  height: 150px;
+  -moz-border-radius: 75px;
+  -webkit-border-radius: 75px;
+  border-radius: 75px;
+  border: 2px solid;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-left: calc(50% - 75px);
+  margin-top: 29px;
+}
+.totalCompanyNum{
+  font-size: 30px;
+  text-align: center;
+  font-weight:bold;
+  margin-top: calc(50% - 21px);
 }
