@@ -1,0 +1,32 @@
+.registrationForm{
+  width: 400px;
+  height: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #b9b9b9;
+  margin-top: 50px;
+  border-radius: 4px;
+}
+.signUp{
+  height: 25px;
+  text-align: center;
+  font-size: 15px;
+  background: #e4e4e4;
+  border-bottom:1px solid #b9b9b9;
+}
+ .registrationFields{
+   width: 350px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 15px;
+ }
+.selectField{
+  height: 30px;
+  color: #878787;
+  font-size: 12px;
+}
+.radioBtnReg{
+  margin-left: 25px;
+  margin-top: 15px;
+  color: #878787;
+}
