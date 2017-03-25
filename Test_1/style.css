@@ -61,9 +61,10 @@
   text-indent: 15px;
 }
 .contentBody{
-  position: static;
+  position: relative;
   width: inherit;
-  height: inherit;
+  height: calc(100% - 22px);
+  padding: 10px;
 }
 .loadingSrc{
   position: relative;
@@ -89,4 +90,26 @@
   text-align: center;
   font-weight:bold;
   margin-top: calc(50% - 21px);
+}
+.scrollList{
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 1px solid #b9b9b9;
+
+}
+.list-group-item{
+    cursor:pointer;
+}
+.list-group-item:first-child{
+  border-radius: 0px;
+  border-top: 0px;
+}
+.list-group-item:last-child{
+  border-radius: 0px;
+  border-bottom: 0px;
+}
+.chosenCompany{
+  background-color: #e2e2e2;
 }
