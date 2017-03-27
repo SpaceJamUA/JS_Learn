@@ -107,6 +107,7 @@ function renderContent() {
       createTotalContent(data.list);
       createListOfCompany(data.list);
       mathLocation(data.list);
+      createNewsDiv();
     }
   })
 
@@ -198,6 +199,111 @@ function mathLocation(data) {
       }
     }
   }
+  companiesByLocation(objMathDrow);
+  createPieEv(objCountries);
+}
 
-  return companiesByLocation(objMathDrow);
+
+function createNews(data){
+  $('#News')[0].innerHTML = '';
+
+  var carouselAll = document.createElement('div');
+  carouselAll.id = 'myCarousel';
+  carouselAll.classList = ('carousel slide');
+
+  var olNews = document.createElement('ol');
+  olNews.classList = ('carousel-indicators');
+
+  var carousel = document.createElement('div');
+  carousel.id = 'carousel-inner';
+
+  var carouselInner = document.createElement('div');
+  carouselInner.classList = ('carousel-inner');
+  // $(carouselInner).carousel('pause');
+
+  for(var i = 0; i < 5; i++){
+    var liNews = document.createElement('li');
+    var divItem = document.createElement('div');
+    divItem.classList = ('item');
+    var imgNews = document.createElement('img');
+    imgNews.src = data[i].img;
+    var textNews = document.createElement('div');
+    textNews.classList = ('TextNews');
+    var linkTitle = document.createElement('a');
+    linkTitle.href = data[i].link;
+    linkTitle.textContent = data[i].link;
+    var newsInfoText = document.createElement('p');
+    newsInfoText.textContent = data[i].description;
+    var authorInfo = document.createElement('div');
+    authorInfo.classList = ('author');
+
+    var author = document.createElement('p');
+    var textAutor = document.createElement('b');
+    var spanAuthor = document.createElement('span');
+    spanAuthor.textContent = data[i].author;
+    textAutor.textContent = 'Author:';
+
+
+
+    var dateNews = document.createElement('p');
+    var textDate = document.createElement('b');
+    var spanDate= document.createElement('span');
+    spanDate.textContent = takeDat(data[i].date);
+    textDate.textContent = 'Date: ';
+
+    if(i == 0){
+      liNews.classList.add('active');
+      divItem.classList.add('active');
+    }
+    liNews.dataset.target = '#myCarousel'
+    liNews.dataset.slideTo = i;
+    $(textNews).append(linkTitle);
+    $(textNews).append(newsInfoText);
+    $(author).append(textAutor);
+    $(author).append(spanAuthor);
+    $(dateNews).append(textDate);
+    $(dateNews).append(spanDate);
+    $(authorInfo).append(author);
+
+    $(authorInfo).append(dateNews);
+    $(olNews).append(liNews);
+    $(divItem).append(imgNews);
+    $(divItem).append(textNews);
+    $(divItem).append(authorInfo);
+    $(carouselInner).append(divItem);
+  }
+  $(carousel).append(olNews);
+  $(carouselInner).append(carousel);
+  $(carouselAll).append(carouselInner);
+  $(carouselAll).append(olNews);
+  $('#News').append(carouselAll);
+}
+function createNewsDiv() {
+  $.ajax({
+    url: "http://codeit.pro/frontTestTask/news/getList",
+    method: "GET",
+    dataType: "html",
+    success: function (data) {
+      return createNews(JSON.parse(data).list);
+    }
+  });
+}
+
+
+function takeDat(num) {
+  var unixtimeToDate = new Date(num*1000);
+  var year = unixtimeToDate.getFullYear();
+  var month =  (unixtimeToDate.getMonth()+1);
+  var day = unixtimeToDate.getDate();
+  var date = day + '.' + month + '.' + year;
+  return date;
+}
+
+function createPieEv(data){
+  for(var i = 0; i < $('.uv-chart').children().length; i++ ){
+    $('.uv-chart').children()[i].dataset.country = data[i];
+    $($('.uv-chart').children()[i]).on('click',function(ev){
+      console.log(ev.target.parentNode.dataset.country)
+    });
+  }
 }
