@@ -103,7 +103,6 @@ function renderContent() {
     method: "GET",
     dataType: "JSON",
     success: function (data) {
-      // console.log(data.list);
       createTotalContent(data.list);
       createListOfCompany(data.list);
       mathLocation(data.list);
@@ -114,7 +113,7 @@ function renderContent() {
 }
 
 function createTotalContent(data){
-  $('#TotalCompanies > img').remove();
+  $('#TotalCompanies')[0].innerHTML = '';
   var circle = document.createElement('div');
   circle.classList = ('circle');
   var totalCompany = document.createElement('center');
@@ -134,13 +133,25 @@ function createListOfCompany(data) {
     liCompany.data = i;
     $(ulCompany).append(liCompany);
   }
-  $('#ListOfCompanies > img').remove();
+  $('#ListOfCompanies')[0].innerHTML = '';
+  $('#ListOfCompanies')[0].dataset.reverse = 0;
+  $('#ListOfCompanies')[0].dataset.type = 0;
   $('#ListOfCompanies').on('click',function(ev){
     for(var i = 0; i < $('.scrollList').children().length; i++){
       $('.scrollList').children()[i].classList.remove('chosenCompany');
     }
+
     ev.target.classList += (' chosenCompany');
-    console.log(data[ev.target.data]);
+    console.log(data[ev.target.data].partners);
+    console.log( parseInt(ev.target.offsetParent.dataset.reverse));
+    console.log(parseInt(ev.target.offsetParent.dataset.type));
+    if(parseInt(ev.target.offsetParent.dataset.type)){
+      openPartners(sortCompanyByName(data[ev.target.data].partners, parseInt(ev.target.offsetParent.dataset.reverse)));
+    }else{
+      openPartners(sortCompanyByPerc(data[ev.target.data].partners,parseInt(ev.target.offsetParent.dataset.reverse)));
+    }
+    // console.log()
+    // openPartners(data[ev.target.data].partners);
   });
   $('#ListOfCompanies').append(ulCompany);
 }
@@ -170,7 +181,7 @@ function companiesByLocation(mathLocation) {
       position: '#CompaniesByLocation'
     }
   }
-  $('#CompaniesByLocation > img').remove();
+  $('#CompaniesByLocation')[0].innerHTML = '';
   var obj = uv.chart('Pie',graphdef, config)
 }
 
@@ -199,27 +210,29 @@ function mathLocation(data) {
       }
     }
   }
+  var totalCompanyes = 0;
+  for(var i = 0; i < objMathDrow.length; i++){
+    totalCompanyes += objMathDrow[i].value;
+  }
+  for(var i = 0; i < objMathDrow.length; i++){
+    objMathDrow[i].value = parseInt(objMathDrow[i].value/totalCompanyes * 100);
+  }
   companiesByLocation(objMathDrow);
-  createPieEv(objCountries);
+  createPieEv(objCountries, data);
 }
 
 
 function createNews(data){
   $('#News')[0].innerHTML = '';
-
   var carouselAll = document.createElement('div');
   carouselAll.id = 'myCarousel';
   carouselAll.classList = ('carousel slide');
-
   var olNews = document.createElement('ol');
   olNews.classList = ('carousel-indicators');
-
   var carousel = document.createElement('div');
   carousel.id = 'carousel-inner';
-
   var carouselInner = document.createElement('div');
   carouselInner.classList = ('carousel-inner');
-  // $(carouselInner).carousel('pause');
 
   for(var i = 0; i < 5; i++){
     var liNews = document.createElement('li');
@@ -236,21 +249,16 @@ function createNews(data){
     newsInfoText.textContent = data[i].description;
     var authorInfo = document.createElement('div');
     authorInfo.classList = ('author');
-
     var author = document.createElement('p');
-    var textAutor = document.createElement('b');
+    var textAuthor = document.createElement('b');
     var spanAuthor = document.createElement('span');
     spanAuthor.textContent = data[i].author;
-    textAutor.textContent = 'Author:';
-
-
-
+    textAuthor.textContent = 'Author:';
     var dateNews = document.createElement('p');
     var textDate = document.createElement('b');
     var spanDate= document.createElement('span');
     spanDate.textContent = takeDat(data[i].date);
     textDate.textContent = 'Date: ';
-
     if(i == 0){
       liNews.classList.add('active');
       divItem.classList.add('active');
@@ -259,12 +267,11 @@ function createNews(data){
     liNews.dataset.slideTo = i;
     $(textNews).append(linkTitle);
     $(textNews).append(newsInfoText);
-    $(author).append(textAutor);
+    $(author).append(textAuthor);
     $(author).append(spanAuthor);
     $(dateNews).append(textDate);
     $(dateNews).append(spanDate);
     $(authorInfo).append(author);
-
     $(authorInfo).append(dateNews);
     $(olNews).append(liNews);
     $(divItem).append(imgNews);
@@ -278,6 +285,7 @@ function createNews(data){
   $(carouselAll).append(olNews);
   $('#News').append(carouselAll);
 }
+
 function createNewsDiv() {
   $.ajax({
     url: "http://codeit.pro/frontTestTask/news/getList",
@@ -299,11 +307,167 @@ function takeDat(num) {
   return date;
 }
 
-function createPieEv(data){
+function createPieEv(countryes, data){
   for(var i = 0; i < $('.uv-chart').children().length; i++ ){
-    $('.uv-chart').children()[i].dataset.country = data[i];
+    $('.uv-chart').children()[i].dataset.country = countryes[i];
     $($('.uv-chart').children()[i]).on('click',function(ev){
-      console.log(ev.target.parentNode.dataset.country)
+      var companyOfThis = [];
+      for(i = 0; i < data.length; i++){
+        if(data[i].location.name == ev.target.parentNode.dataset.country){
+          companyOfThis.push(data[i].name);
+        }
+      }
+      createPieList(companyOfThis, ev.target.parentNode.dataset.country);
     });
+  }
+}
+
+function createPieList(data,countryName) {
+  var ulCompany = document.createElement('ul');
+  ulCompany.classList = ('list-group listFromPie');
+  var companyName = document.createElement('b');
+  companyName.textContent = countryName+':';
+  for(var i = 0; i < data.length; i++){
+    var liCompany = document.createElement('li');
+    liCompany.classList = 'list-group-item';
+    liCompany.textContent = data[i];
+    $(ulCompany).append(liCompany);
+  }
+  $('#CompaniesByLocation')[0].innerHTML = '';
+  var backToPie = document.createElement('button');
+  var glyphBack = document.createElement('span');
+
+  $(backToPie).on('click',function(ev){
+    $(backToPie).remove();
+    $.ajax({
+      url: "http://codeit.pro/frontTestTask/company/getList",
+      method: "GET",
+      dataType: "JSON",
+      success: function (data) {
+        mathLocation(data.list);
+      }
+    })
+  })
+
+  glyphBack.classList = ('glyphicon glyphicon-arrow-left');
+  backToPie.classList = ('btn btn-default btn-xs backToPie');
+  $(backToPie).append(glyphBack);
+  $($('#CompaniesByLocation')[0].previousSibling).append(backToPie);
+  $('#CompaniesByLocation').append(companyName);
+  $('#CompaniesByLocation').append(ulCompany);
+}
+
+
+function createPartners(data) {
+  var graphdef = {
+    categories: ['partners'],
+    dataset:{
+      'partners' : data
+    }
+  };
+  var config = {
+    legend: {
+      position: 'right'
+    },
+    dimension: {
+      width: 700,
+      height: 180
+    },
+    label :{
+      fontsize: 15
+    },
+    margin: {
+      right: 10,
+      left: 25,
+      bottom: 25
+    },
+    meta: {
+      position: '#drawGraphPartners'
+    },
+    graph: {
+      orientation: 'Vertical'
+    },
+    legend: {
+      hidden: true
+    }
+  }
+
+  var obj = uv.chart('Bar',graphdef, config);
+}
+
+function openPartners(data) {
+  var divContainer = document.createElement('div');
+  divContainer.classList = ('container');
+  divContainer.id = 'graphContainer';
+  var divCol = document.createElement('div');
+  divCol.classList = ('col-lg-12 col-md-12 col-sm-12 col-xs-12');
+  // var divGraphPartners = document.createElement('div');
+  divCol.id = 'graphPartners';
+  var header = document.createElement('div');
+  header.classList = ('header');
+  var bText = document.createElement('b');
+  bText.textContent = 'Company Partners';
+  var btnSortGroup = document.createElement('div');
+  btnSortGroup.classList = ('sortBtn');
+  var bBtnText = document.createElement('b');
+  bBtnText.textContent = 'Sort By:';
+  var btnSortName = document.createElement('button');
+  btnSortName.classList = ('btn btn-default btn-xs');
+  btnSortName.type = 'button';
+  btnSortName.textContent = 'Name';
+  var spanSortName = document.createElement('span');
+  spanSortName.classList = ('glyphicon glyphicon-sort');
+  var btnSortPerc = document.createElement('button');
+  btnSortPerc.classList = ('btn btn-default btn-xs');
+  btnSortPerc.type = 'button';
+  btnSortPerc.textContent = 'Percentage';
+  var spanSortPerc = document.createElement('span');
+  spanSortPerc.classList = ('glyphicon glyphicon-sort');
+  var divContentBody = document.createElement('div');
+  divContentBody.id = 'drawGraphPartners';
+  divContentBody.classList = ('contentBody');
+  $(header).append(bText);
+  $(btnSortGroup).append(bBtnText);
+  $(btnSortName).append(spanSortName);
+  $(btnSortGroup).append(btnSortName);
+  $(btnSortPerc).append(spanSortPerc);
+  $(btnSortGroup).append(btnSortPerc);
+  $(header).append(btnSortGroup);
+  $(divCol).append(header);
+  $(divCol).append(divContentBody);
+  $(divContainer).append(divCol);
+  if(document.body.children.length > 4 ){
+    $(document.body.children[2]).remove();
+  }
+  $(document.body.children[1]).after(divContainer);
+
+  createPartners(data);
+}
+
+function sortCompanyByPerc(data,reverse) {
+  if(reverse){
+    return data.sort(function(a, b) {
+      if (a.value > b.value) return 1;
+      if (a.value < b.value) return -1;
+    });
+  }else{
+    return data.sort(function(a, b) {
+      if (a.value > b.value) return -1;
+      if (a.value < b.value) return 1;
+    })
+  }
+}
+
+function sortCompanyByName(data,reverse) {
+  if(reverse){
+    return data.sort(function(a, b) {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+    });
+  }else{
+    return data.sort(function(a, b) {
+      if (a.name > b.name) return -1;
+      if (a.name < b.name) return 1;
+    })
   }
 }

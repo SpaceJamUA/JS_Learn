@@ -97,6 +97,13 @@
   height: 100%;
   margin: auto;
   border: 1px solid #b9b9b9;
+}
+.listFromPie{
+  overflow-y: scroll;
+  width: 100%;
+  height: calc(100% - 20px);
+  margin: auto;
+  border: 1px solid #b9b9b9;
 
 }
 .list-group-item{
@@ -113,10 +120,7 @@
 .chosenCompany{
   background-color: #e2e2e2;
 }
-/*.item > img {
-  width: 150px;
-  height: calc(100% - 50px);
-}*/
+
 
 
 
@@ -167,4 +171,34 @@
 }
 p{
   margin: 0 0 0px;
+}
+.backToPie{
+  float: right;
+  margin-right: 6px;
+  border: 0px;
+}
+#graphPartners{
+  width: 770px;
+  height: 300px;
+  border: 1px solid;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.sortBtn{
+  float: right;
+}
+.sortBtn>button{
+  margin-bottom: 2px;
+  background-color: #e4e4e4;
+  border: 0px;
+}
+.sortBtn>button:hover{
+  background-color: #d0d0d0;
+}
+#graphContainer{
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
