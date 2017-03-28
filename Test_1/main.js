@@ -32,14 +32,11 @@ $('#sendBtn').on('click', function(){
     }
   });
 })
-
 function checkFieldError(data) {
   var errorMsg = document.createElement('div');
   errorMsg.classList = 'textError';
   errorMsg.textContent = data;
-
   if(data.toLowerCase().indexOf('secondname')+1){
-
     $('#userSecondName')[0].parentNode.classList.add('has-error','has-feedback');
     $('#userSecondName')[0].parentNode.after(errorMsg);
   }else if(data.toLowerCase().indexOf('name')+1){
@@ -56,47 +53,35 @@ function checkFieldError(data) {
     $('#userGender')[0].parentNode.after(errorMsg);
   }
 }
-
-
 function createDivContent(contentName) {
   $('body')[0].innerHTML = '';
   for(var i = 0; i < contentName.length; i++){
     var mainContent = document.createElement('div');
     mainContent.classList = ('mainContent');
-
-
     var tagContent = document.createElement('div');
     tagContent.classList = ('col-lg-6 col-sm-12 col-xs-12 mainClass');
-
     var downloadContent = document.createElement('div');
     downloadContent.classList = ('downloadContent');
-
     var headerOfContent = document.createElement('div');
     headerOfContent.classList = ('header');
-
     var headerText = document.createElement('b');
     headerText.textContent = contentName[i];
-
     var contentBody = document.createElement('div')
     contentBody.classList = ('contentBody');
     contentBody.id = contentName[i];
-
     var loadingImg = document.createElement('img');
     loadingImg.classList = ('loadingSrc');
     loadingImg.src = '5.gif';
     loadingImg.alt = 'Loading...';
-
     $(headerOfContent).append(headerText);
     $(downloadContent).append(headerOfContent);
     $(contentBody).append(loadingImg);
-
     $(downloadContent).append(contentBody);
     $(tagContent).append(downloadContent);
     $(mainContent).append(tagContent);
     $(document.body).append(mainContent);
   }
 }
-
 function renderContent() {
   $.ajax({
     url: "http://codeit.pro/frontTestTask/company/getList",
@@ -109,9 +94,7 @@ function renderContent() {
       createNewsDiv();
     }
   })
-
 }
-
 function createTotalContent(data){
   $('#TotalCompanies')[0].innerHTML = '';
   var circle = document.createElement('div');
@@ -134,29 +117,22 @@ function createListOfCompany(data) {
     $(ulCompany).append(liCompany);
   }
   $('#ListOfCompanies')[0].innerHTML = '';
-  $('#ListOfCompanies')[0].dataset.reverse = 0;
-  $('#ListOfCompanies')[0].dataset.type = 0;
+  $('#ListOfCompanies')[0].data = false;
+  $('#ListOfCompanies')[0].dataset.type = 'false';
   $('#ListOfCompanies').on('click',function(ev){
     for(var i = 0; i < $('.scrollList').children().length; i++){
       $('.scrollList').children()[i].classList.remove('chosenCompany');
     }
-
     ev.target.classList += (' chosenCompany');
-    console.log(data[ev.target.data].partners);
-    console.log( parseInt(ev.target.offsetParent.dataset.reverse));
-    console.log(parseInt(ev.target.offsetParent.dataset.type));
-    if(parseInt(ev.target.offsetParent.dataset.type)){
-      openPartners(sortCompanyByName(data[ev.target.data].partners, parseInt(ev.target.offsetParent.dataset.reverse)));
+
+    if(ev.target.offsetParent.dataset.type == 'name'){
+      openPartners(sortCompanyByName(data[ev.target.data].partners, !ev.target.offsetParent.data));
     }else{
-      openPartners(sortCompanyByPerc(data[ev.target.data].partners,parseInt(ev.target.offsetParent.dataset.reverse)));
+      openPartners(sortCompanyByPerc(data[ev.target.data].partners, !ev.target.offsetParent.data));
     }
-    // console.log()
-    // openPartners(data[ev.target.data].partners);
   });
   $('#ListOfCompanies').append(ulCompany);
 }
-
-
 function companiesByLocation(mathLocation) {
   var graphdef = {
     categories: ['uvCharts'],
@@ -184,14 +160,12 @@ function companiesByLocation(mathLocation) {
   $('#CompaniesByLocation')[0].innerHTML = '';
   var obj = uv.chart('Pie',graphdef, config)
 }
-
 function mathLocation(data) {
   var objAllCountries = [];
   for(var i = 0; i < data.length; i++){
     objAllCountries.push(data[i].location.name);
   }
   var objCountries = objAllCountries.slice();
-
   for(var i = 0; i < objCountries.length;i++){
     for(var j = i+1; j < objCountries.length;j++){
       if(objAllCountries[i] == objAllCountries[j]){
@@ -200,7 +174,6 @@ function mathLocation(data) {
       }
     }
   }
-
   var objMathDrow = [];
   for( i=0; i < objCountries.length; i++){
     objMathDrow.push({name: objCountries[i],value: 0});
@@ -220,8 +193,6 @@ function mathLocation(data) {
   companiesByLocation(objMathDrow);
   createPieEv(objCountries, data);
 }
-
-
 function createNews(data){
   $('#News')[0].innerHTML = '';
   var carouselAll = document.createElement('div');
@@ -233,7 +204,6 @@ function createNews(data){
   carousel.id = 'carousel-inner';
   var carouselInner = document.createElement('div');
   carouselInner.classList = ('carousel-inner');
-
   for(var i = 0; i < 5; i++){
     var liNews = document.createElement('li');
     var divItem = document.createElement('div');
@@ -285,7 +255,6 @@ function createNews(data){
   $(carouselAll).append(olNews);
   $('#News').append(carouselAll);
 }
-
 function createNewsDiv() {
   $.ajax({
     url: "http://codeit.pro/frontTestTask/news/getList",
@@ -296,8 +265,6 @@ function createNewsDiv() {
     }
   });
 }
-
-
 function takeDat(num) {
   var unixtimeToDate = new Date(num*1000);
   var year = unixtimeToDate.getFullYear();
@@ -306,7 +273,6 @@ function takeDat(num) {
   var date = day + '.' + month + '.' + year;
   return date;
 }
-
 function createPieEv(countryes, data){
   for(var i = 0; i < $('.uv-chart').children().length; i++ ){
     $('.uv-chart').children()[i].dataset.country = countryes[i];
@@ -321,7 +287,6 @@ function createPieEv(countryes, data){
     });
   }
 }
-
 function createPieList(data,countryName) {
   var ulCompany = document.createElement('ul');
   ulCompany.classList = ('list-group listFromPie');
@@ -336,7 +301,6 @@ function createPieList(data,countryName) {
   $('#CompaniesByLocation')[0].innerHTML = '';
   var backToPie = document.createElement('button');
   var glyphBack = document.createElement('span');
-
   $(backToPie).on('click',function(ev){
     $(backToPie).remove();
     $.ajax({
@@ -348,7 +312,6 @@ function createPieList(data,countryName) {
       }
     })
   })
-
   glyphBack.classList = ('glyphicon glyphicon-arrow-left');
   backToPie.classList = ('btn btn-default btn-xs backToPie');
   $(backToPie).append(glyphBack);
@@ -356,8 +319,6 @@ function createPieList(data,countryName) {
   $('#CompaniesByLocation').append(companyName);
   $('#CompaniesByLocation').append(ulCompany);
 }
-
-
 function createPartners(data) {
   var graphdef = {
     categories: ['partners'],
@@ -391,17 +352,14 @@ function createPartners(data) {
       hidden: true
     }
   }
-
   var obj = uv.chart('Bar',graphdef, config);
 }
-
 function openPartners(data) {
   var divContainer = document.createElement('div');
   divContainer.classList = ('container');
   divContainer.id = 'graphContainer';
   var divCol = document.createElement('div');
   divCol.classList = ('col-lg-12 col-md-12 col-sm-12 col-xs-12');
-  // var divGraphPartners = document.createElement('div');
   divCol.id = 'graphPartners';
   var header = document.createElement('div');
   header.classList = ('header');
@@ -417,11 +375,26 @@ function openPartners(data) {
   btnSortName.textContent = 'Name';
   var spanSortName = document.createElement('span');
   spanSortName.classList = ('glyphicon glyphicon-sort');
+
+  $(btnSortName).on('click',function(ev){
+    if($('#ListOfCompanies')[0].dataset.type == 'name'){
+      $('#ListOfCompanies')[0].data = !$('#ListOfCompanies')[0].data;
+    }
+    $('#ListOfCompanies')[0].dataset.type = 'name';
+    return openPartners(sortCompanyByName(data, !$('#ListOfCompanies')[0].data));
+  })
   var btnSortPerc = document.createElement('button');
   btnSortPerc.classList = ('btn btn-default btn-xs');
   btnSortPerc.type = 'button';
   btnSortPerc.textContent = 'Percentage';
   var spanSortPerc = document.createElement('span');
+  $(btnSortPerc).on('click',function(ev){
+    if($('#ListOfCompanies')[0].dataset.type == 'false'){
+      $('#ListOfCompanies')[0].data = !$('#ListOfCompanies')[0].data;
+    }
+    $('#ListOfCompanies')[0].dataset.type = 'false';
+    return openPartners(sortCompanyByPerc(data, !$('#ListOfCompanies')[0].data));
+  })
   spanSortPerc.classList = ('glyphicon glyphicon-sort');
   var divContentBody = document.createElement('div');
   divContentBody.id = 'drawGraphPartners';
@@ -440,34 +413,31 @@ function openPartners(data) {
     $(document.body.children[2]).remove();
   }
   $(document.body.children[1]).after(divContainer);
-
   createPartners(data);
 }
-
 function sortCompanyByPerc(data,reverse) {
   if(reverse){
-    return data.sort(function(a, b) {
-      if (a.value > b.value) return 1;
-      if (a.value < b.value) return -1;
-    });
-  }else{
     return data.sort(function(a, b) {
       if (a.value > b.value) return -1;
       if (a.value < b.value) return 1;
     })
+  }else{
+    return data.sort(function(a, b) {
+      if (a.value > b.value) return 1;
+      if (a.value < b.value) return -1;
+    })
   }
 }
-
 function sortCompanyByName(data,reverse) {
   if(reverse){
     return data.sort(function(a, b) {
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
-    });
-  }else{
-    return data.sort(function(a, b) {
       if (a.name > b.name) return -1;
       if (a.name < b.name) return 1;
+    })
+  }else{
+    return data.sort(function(a, b) {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
     })
   }
 }
