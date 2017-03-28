@@ -1,10 +1,11 @@
 'use strict';
+(function(){
 var CONTENT_NAME = ['TotalCompanies','ListOfCompanies','CompaniesByLocation','News'];
 var userObj = {};
 $('#userConditions').on('click', function() {
   $('.sendFormReg')[0].disabled = !$('.sendFormReg')[0].disabled;
 })
-$('#sendBtn').on('click', function(){
+$('#sendBtn').on('click', function(){ //Creating an Event to Submit a Form
   userObj.name = $('#userName')[0].value;
   userObj.secondname = $('#userSecondName')[0].value;
   userObj.email = $('#userEmail')[0].value;
@@ -32,7 +33,7 @@ $('#sendBtn').on('click', function(){
     }
   });
 })
-function checkFieldError(data) {
+function checkFieldError(data) { //Check error field
   var errorMsg = document.createElement('div');
   errorMsg.classList = 'textError';
   errorMsg.textContent = data;
@@ -53,7 +54,7 @@ function checkFieldError(data) {
     $('#userGender')[0].parentNode.after(errorMsg);
   }
 }
-function createDivContent(contentName) {
+function createDivContent(contentName) { //Creating Boot Items
   $('body')[0].innerHTML = '';
   for(var i = 0; i < contentName.length; i++){
     var mainContent = document.createElement('div');
@@ -82,12 +83,12 @@ function createDivContent(contentName) {
     $(document.body).append(mainContent);
   }
 }
-function renderContent() {
+function renderContent() {//The function of obtaining data from the server
   $.ajax({
     url: "http://codeit.pro/frontTestTask/company/getList",
     method: "GET",
     dataType: "JSON",
-    success: function (data) {
+    success: function (data) { //Creation and rendering of company blocks
       createTotalContent(data.list);
       createListOfCompany(data.list);
       mathLocation(data.list);
@@ -95,7 +96,7 @@ function renderContent() {
     }
   })
 }
-function createTotalContent(data){
+function createTotalContent(data){ //Create total content
   $('#TotalCompanies')[0].innerHTML = '';
   var circle = document.createElement('div');
   circle.classList = ('circle');
@@ -106,7 +107,7 @@ function createTotalContent(data){
   $('#TotalCompanies').append(circle);
 }
 
-function createListOfCompany(data) {
+function createListOfCompany(data) { //Create 'List of companies'
   var ulCompany = document.createElement('ul');
   ulCompany.classList = ('list-group scrollList');
   for(var i = 0; i < data.length; i++){
@@ -133,7 +134,7 @@ function createListOfCompany(data) {
   });
   $('#ListOfCompanies').append(ulCompany);
 }
-function companiesByLocation(mathLocation) {
+function companiesByLocation(mathLocation) { //Create PIE graph
   var graphdef = {
     categories: ['uvCharts'],
     dataset:{
@@ -160,7 +161,7 @@ function companiesByLocation(mathLocation) {
   $('#CompaniesByLocation')[0].innerHTML = '';
   var obj = uv.chart('Pie',graphdef, config)
 }
-function mathLocation(data) {
+function mathLocation(data) { //Information for drawing the graph
   var objAllCountries = [];
   for(var i = 0; i < data.length; i++){
     objAllCountries.push(data[i].location.name);
@@ -193,7 +194,8 @@ function mathLocation(data) {
   companiesByLocation(objMathDrow);
   createPieEv(objCountries, data);
 }
-function createNews(data){
+
+function createNews(data){ //Create NEWS element
   $('#News')[0].innerHTML = '';
   var carouselAll = document.createElement('div');
   carouselAll.id = 'myCarousel';
@@ -204,8 +206,9 @@ function createNews(data){
   carousel.id = 'carousel-inner';
   var carouselInner = document.createElement('div');
   carouselInner.classList = ('carousel-inner');
-  for(var i = 0; i < 5; i++){
+  for(var i = 0; i < data.length; i++){
     var liNews = document.createElement('li');
+    liNews.data = i;
     var divItem = document.createElement('div');
     divItem.classList = ('item');
     var imgNews = document.createElement('img');
@@ -215,7 +218,9 @@ function createNews(data){
     var linkTitle = document.createElement('a');
     linkTitle.href = data[i].link;
     linkTitle.textContent = data[i].link;
-    var newsInfoText = document.createElement('p');
+    var newsInfoText = document.createElement('div');
+    newsInfoText.classList = ('EditingByHeight');
+
     newsInfoText.textContent = data[i].description;
     var authorInfo = document.createElement('div');
     authorInfo.classList = ('author');
@@ -254,8 +259,14 @@ function createNews(data){
   $(carouselAll).append(carouselInner);
   $(carouselAll).append(olNews);
   $('#News').append(carouselAll);
+  $('.carousel-indicators').on('click',function(ev){//Function for change size TextNews
+    ev.target.click();
+    $($('.EditingByHeight')[ev.target.data]).dotdotdot({
+      watch: 'window'
+    })
+  })
 }
-function createNewsDiv() {
+function createNewsDiv() { //Send form for News
   $.ajax({
     url: "http://codeit.pro/frontTestTask/news/getList",
     method: "GET",
@@ -265,7 +276,7 @@ function createNewsDiv() {
     }
   });
 }
-function takeDat(num) {
+function takeDat(num) { //Date converter
   var unixtimeToDate = new Date(num*1000);
   var year = unixtimeToDate.getFullYear();
   var month =  (unixtimeToDate.getMonth()+1);
@@ -273,21 +284,39 @@ function takeDat(num) {
   var date = day + '.' + month + '.' + year;
   return date;
 }
-function createPieEv(countryes, data){
+function createPieEv(countryes, data){ //Add events to the PIE graph
   for(var i = 0; i < $('.uv-chart').children().length; i++ ){
-    $('.uv-chart').children()[i].dataset.country = countryes[i];
-    $($('.uv-chart').children()[i]).on('click',function(ev){
-      var companyOfThis = [];
-      for(i = 0; i < data.length; i++){
-        if(data[i].location.name == ev.target.parentNode.dataset.country){
-          companyOfThis.push(data[i].name);
+    if(i>=5){
+      break;
+    }
+    if($('.uv-chart').length > 1){
+      $($('.uv-chart')[1]).children()[i].dataset.country = countryes[i];
+      $($($('.uv-chart')[1]).children()[i]).on('click',function(ev){
+        var companyOfThis = [];
+        for(i = 0; i < data.length; i++){
+          if(data[i].location.name == ev.target.parentNode.dataset.country){
+            companyOfThis.push(data[i].name);
+          }
         }
-      }
-      createPieList(companyOfThis, ev.target.parentNode.dataset.country);
-    });
+        createPieList(companyOfThis, ev.target.parentNode.dataset.country);
+      });
+    }else{
+      $('.uv-chart').children()[i].dataset.country = countryes[i];
+      $($('.uv-chart').children()[i]).on('click',function(ev){
+        var companyOfThis = [];
+        for(i = 0; i < data.length; i++){
+          if(data[i].location.name == ev.target.parentNode.dataset.country){
+            companyOfThis.push(data[i].name);
+          }
+        }
+        createPieList(companyOfThis, ev.target.parentNode.dataset.country);
+      });
+    }
+
+
   }
 }
-function createPieList(data,countryName) {
+function createPieList(data,countryName) { //Function for create list company of the country
   var ulCompany = document.createElement('ul');
   ulCompany.classList = ('list-group listFromPie');
   var companyName = document.createElement('b');
@@ -319,7 +348,7 @@ function createPieList(data,countryName) {
   $('#CompaniesByLocation').append(companyName);
   $('#CompaniesByLocation').append(ulCompany);
 }
-function createPartners(data) {
+function createPartners(data) { //Function for draw graph partners
   var graphdef = {
     categories: ['partners'],
     dataset:{
@@ -354,7 +383,8 @@ function createPartners(data) {
   }
   var obj = uv.chart('Bar',graphdef, config);
 }
-function openPartners(data) {
+
+function openPartners(data) { //Create DIV element for open partnhers
   var divContainer = document.createElement('div');
   divContainer.classList = ('container');
   divContainer.id = 'graphContainer';
@@ -375,8 +405,7 @@ function openPartners(data) {
   btnSortName.textContent = 'Name';
   var spanSortName = document.createElement('span');
   spanSortName.classList = ('glyphicon glyphicon-sort');
-
-  $(btnSortName).on('click',function(ev){
+  $(btnSortName).on('click',function(ev){ //Function of changing and saving sort by name
     if($('#ListOfCompanies')[0].dataset.type == 'name'){
       $('#ListOfCompanies')[0].data = !$('#ListOfCompanies')[0].data;
     }
@@ -388,7 +417,7 @@ function openPartners(data) {
   btnSortPerc.type = 'button';
   btnSortPerc.textContent = 'Percentage';
   var spanSortPerc = document.createElement('span');
-  $(btnSortPerc).on('click',function(ev){
+  $(btnSortPerc).on('click',function(ev){//Function of changing and saving sort by Percentage
     if($('#ListOfCompanies')[0].dataset.type == 'false'){
       $('#ListOfCompanies')[0].data = !$('#ListOfCompanies')[0].data;
     }
@@ -415,7 +444,7 @@ function openPartners(data) {
   $(document.body.children[1]).after(divContainer);
   createPartners(data);
 }
-function sortCompanyByPerc(data,reverse) {
+function sortCompanyByPerc(data,reverse) { //Function Sort by Percentage
   if(reverse){
     return data.sort(function(a, b) {
       if (a.value > b.value) return -1;
@@ -428,7 +457,7 @@ function sortCompanyByPerc(data,reverse) {
     })
   }
 }
-function sortCompanyByName(data,reverse) {
+function sortCompanyByName(data,reverse) {//Function Sort by Name
   if(reverse){
     return data.sort(function(a, b) {
       if (a.name > b.name) return -1;
@@ -441,3 +470,4 @@ function sortCompanyByName(data,reverse) {
     })
   }
 }
+})()

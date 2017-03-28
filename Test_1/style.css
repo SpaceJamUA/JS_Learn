@@ -83,7 +83,7 @@
   margin-right: auto;
   position: relative;
   margin-left: calc(50% - 75px);
-  margin-top: 29px;
+  margin-top: 18px;
 }
 .totalCompanyNum{
   font-size: 30px;
@@ -139,7 +139,7 @@
   text-align: left;
   float: right;
   width: calc(100% - 160px);
-  height: calc(100% - 40px);
+  height: calc(100% - 70px);
 }
 
 .author{
@@ -201,4 +201,7 @@ p{
   width: 800px;
   margin-left: auto;
   margin-right: auto;
+}
+.EditingByHeight{
+  height: calc(100% - 15px);
 }
