@@ -6,11 +6,11 @@ $('#userConditions').on('click', function() {
   $('.sendFormReg')[0].disabled = !$('.sendFormReg')[0].disabled;
 })
 $('#sendBtn').on('click', function(){ //Creating an Event to Submit a Form
-  userObj.name = $('#userName')[0].value;
-  userObj.secondname = $('#userSecondName')[0].value;
-  userObj.email = $('#userEmail')[0].value;
-  userObj.gender = $('#userGender')[0].value.toLowerCase();
-  userObj.pass = $('#userPass')[0].value;
+  userObj.name = $('#name')[0].value;
+  userObj.secondname = $('#secondname')[0].value;
+  userObj.email = $('#email')[0].value;
+  userObj.gender = $('#gender')[0].value.toLowerCase();
+  userObj.pass = $('#pass')[0].value;
   for(var i = 0;i < $('.groupRegistration').children().length; i++){
     $('.groupRegistration').children()[i].classList.remove('has-error','has-feedback');
 
@@ -28,30 +28,23 @@ $('#sendBtn').on('click', function(){ //Creating an Event to Submit a Form
         createDivContent(CONTENT_NAME);
         renderContent();
       }else{
-        return checkFieldError(JSON.parse(data).message);
+
+        return checkFieldError(JSON.parse(data));
+
       }
     }
   });
 })
 function checkFieldError(data) { //Check error field
+  var dataField = data.field
+  var dataMessage = data.message
+
   var errorMsg = document.createElement('div');
   errorMsg.classList = 'textError';
-  errorMsg.textContent = data;
-  if(data.toLowerCase().indexOf('secondname')+1){
-    $('#userSecondName')[0].parentNode.classList.add('has-error','has-feedback');
-    $('#userSecondName')[0].parentNode.after(errorMsg);
-  }else if(data.toLowerCase().indexOf('name')+1){
-    $('#userName')[0].parentNode.classList.add('has-error','has-feedback');
-    $('#userName')[0].parentNode.after(errorMsg);
-  }else if(data.toLowerCase().indexOf('email')+1){
-    $('#userEmail')[0].parentNode.classList.add('has-error','has-feedback');
-    $('#userEmail')[0].parentNode.after(errorMsg);
-  }else if(data.toLowerCase().indexOf('pass')+1){
-    $('#userPass')[0].parentNode.classList.add('has-error','has-feedback');
-    $('#userPass')[0].parentNode.after(errorMsg);
-  } else if(data.toLowerCase().indexOf('gender')+1){
-    $('#userGender')[0].parentNode.classList.add('has-error','has-feedback');
-    $('#userGender')[0].parentNode.after(errorMsg);
+  errorMsg.textContent = dataMessage;
+  if( dataMessage.toLowerCase().indexOf(dataField)+1){
+    $('#'+dataField)[0].parentNode.classList.add('has-error','has-feedback');
+    $('#'+dataField)[0].parentNode.after(errorMsg);
   }
 }
 function createDivContent(contentName) { //Creating Boot Items

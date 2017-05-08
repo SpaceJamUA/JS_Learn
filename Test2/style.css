@@ -1,0 +1,242 @@
+.mainContent{
+  height: 750px;
+}
+
+.header{
+  width: 100%;
+  height: 40%;
+  margin-top: 15px;
+}
+.userInfo{
+  width: 100%;
+  height: 50%;
+}
+.userStatistic{
+  width: 100%;
+  height: 50%;
+  margin-top: 5px;
+}
+.userImg{
+  position: relative;
+  height: 100%;
+  float: left;
+  z-index: 2;
+}
+.userImg>img{
+  background-size: contain;
+  height: 100%;
+  border-radius: 50%;
+}
+.userName{
+  float: left;
+  height: 100%;
+  width:auto;
+  padding: 10px;
+}
+.name{
+  position: relative;
+  height: 50%;
+  padding: 8px;
+}
+.name>span{
+  color: rgb(185, 183, 180);
+  font-size: 12px;
+}
+.status{
+  position: relative;
+  height: 50%;
+  background-color: rgb(235, 242, 180);
+  border-radius: 5px;
+  border: 1px solid rgb(166, 156, 170);
+  padding: 8px;
+  margin-left:  -50px;
+  z-index: 1;
+  float: right;
+  width: 400px;
+}
+.status>div{
+  margin-left: 45px;
+  height: 100%;
+}
+
+.statisticInfo{
+  float: right;
+  height: 100%;
+  width: 70%;
+}
+.service{
+  width: 100%;
+  height: 15%;
+}
+.service>span{
+  margin-right: 20px;
+  float: right;
+}
+.statistic{
+  width: 100%;
+  height: 70%;
+  border-top: 1px solid rgb(160, 161, 159);
+  border-bottom: 1px solid rgb(160, 161, 159);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.total{
+  width: 100%;
+  height: 15%;
+  font-family: fantasy;
+  font-size: 15px;
+
+}
+.total :last-child {
+  margin-right: 20px;
+  float: right;
+}
+.elem{
+  height: 33%;
+  width: 100%;
+  padding: 1px;
+  border-left: 1px solid rgb(99, 184, 226);
+  padding-left: 0px;
+}
+.statName{
+  position: absolute;
+  z-index: 2;
+}
+.color{
+  height: 100%;
+  position: relative;
+  float: left;
+  z-index: 1;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.statTotal{
+  float: right;
+  margin-right: 20px;
+}
+.color1{
+  background:  rgb(154, 222, 143);
+  width: 80%;
+}
+.color2{
+  background: rgb(147, 207, 237);
+  width: 20%;
+}
+.color3{
+  background: rgb(147, 207, 237);
+  width: 9%;
+}
+
+.comments{
+  width: 100%;
+  height: 55%;
+  margin-top: 10px;
+}
+.commentsInfo{
+  width: 100%;
+  height: 7%;
+  padding: 2px;
+}
+.commentsContent{
+  width: 100%;
+  height: 63%;
+}
+.commentsBtn{
+  width: 114%;
+  height: 35%;
+  background: rgb(230, 230, 230);
+  padding-top: 2%;
+  margin-left: -7%;
+  margin-right: -7%;
+}
+
+.addComments{
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+}
+.btn{
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+}
+.lastComments{
+  float: left;
+  height: 100%;
+}
+.allComments{
+  margin-left: 20px;
+  float: left;
+  height: 100%;
+}
+.glyphInfo{
+  float: right;
+  height: 100%;
+  width: 80px;
+
+  margin-right: 15px;
+}
+.btn1{
+  width: 50%;
+  float: left;
+  border-color: white;
+}
+.btn2{
+  width: 50%;
+  float: left;
+}
+.btn-default{
+    border-color: white;
+}
+.gplyphArt{
+    color: rgb(0, 164, 194)
+}
+
+.commentsContent{
+  overflow:scroll;
+}
+
+.headerComments{
+  width: 100%;
+  height: 20px;
+
+}
+.guestName{
+  width: auto;
+  height: 100%;
+  float: left;
+}
+.dateComments{
+  color: rgb(138, 137, 137);
+  margin-left: 3%;
+  width: auto;
+  height: 100%;
+  float: left;
+}
+.dateComments>span{
+  font-size: 11px;
+}
+.bodyComments{
+  width: 100%;
+  background-color: rgb(217, 246, 246);
+  margin-top:  2px;
+  height: auto;
+  padding: 6px;
+  border: 1px solid rgb(152, 149, 149);
+  border-radius: 2px;
+  width: 90%;
+}
+.userCommentsName{
+  width: 30%;
+  margin-left: 5%;
+}
+.commentsArea{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.addBtn{
+  margin-top: 5px;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
