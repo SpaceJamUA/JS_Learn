@@ -17,4 +17,4 @@ http://localhost:3000/
 
 ## Authors
 
-* **Yevhenii Piliavtsev** - *Initial work* - [SpaceJamUA](https://github.com/SpaceJamUA)
+* **Yevhenii Piliavtsev** - [SpaceJamUA](https://github.com/SpaceJamUA)
