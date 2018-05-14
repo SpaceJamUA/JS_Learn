@@ -1,5 +1,6 @@
 # SkyChat
 
+The application is a chat, based on AngularJS and Socket.IO
 ## General commands
 ### Install dependencies
 Use for the package installer
