@@ -2,9 +2,18 @@
 
 ## General commands
 ### Install dependencies
-use `npm install`
+Use 
+`npm install`
 
 ### Start development
-dev server runs at http://localhost:3000/
-run `npm start` to start dev server
+Dev server runs at 
+```
+http://localhost:3000/
+```
+
+Run 
+```
+npm start
+``` 
+to start dev server
 
