@@ -1,5 +1,4 @@
 app.controller('loginCtrl', function($scope, minDb, $location) {
-
   $scope.loginToChat = ()=> {
     if(!$scope.userName){
       return;
@@ -7,7 +6,6 @@ app.controller('loginCtrl', function($scope, minDb, $location) {
     minDb.name = $scope.userName;
     $location.path('/chat');
   }
-
 });
 
 app.directive('loginBtn', function(minDb) {

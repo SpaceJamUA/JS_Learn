@@ -38,8 +38,6 @@ app.controller('chatCtrl', function($scope, minDb) {
     $scope.$apply();
   });
 
-
-
   let loginNewUs = (name) => {
     animDb.push(name);
     if (animDb.length > 1) {
@@ -68,7 +66,6 @@ app.controller('chatCtrl', function($scope, minDb) {
     let date = new Date();
     return date.getHours() + ':' + date.getMinutes();
   };
-
 
 });
 
