@@ -2,18 +2,19 @@
 
 ## General commands
 ### Install dependencies
-Use 
-`npm install`
+Use for the package installer
+``` 
+npm install
+``` 
 
 ### Start development
+Run `npm start` to start dev server
+
 Dev server runs at 
 ```
 http://localhost:3000/
 ```
 
-Run 
-```
-npm start
-``` 
-to start dev server
+## Authors
 
+* **Yevhenii Piliavtsev** - *Initial work* - [SpaceJamUA](https://github.com/SpaceJamUA)
