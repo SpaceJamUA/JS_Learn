@@ -1,6 +1,10 @@
 {
   "name": "chatv04",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SpaceJamUA/JS_Learn.git"
+  },
   "devDependencies": {
     "express": "^4.16.3",
     "node-static": "^0.7.10",
