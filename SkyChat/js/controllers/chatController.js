@@ -25,7 +25,7 @@ app.controller('chatCtrl', function($scope, minDb) {
     };
     $scope.msgInput = '';
     socket.emit('message', message);
-  }
+  };
 
   socket.on('messageToClients', (msg) => {
     $scope.dataBase.push({
@@ -47,7 +47,7 @@ app.controller('chatCtrl', function($scope, minDb) {
     } else {
       queueAnim(animDb);
     }
-  }
+  };
 
   let queueAnim = (arr) => {
     $scope.joinNewUser = arr[0] + " Join to chat";
@@ -62,12 +62,12 @@ app.controller('chatCtrl', function($scope, minDb) {
         return queueAnim(arr);
       }
     });
-  }
+  };
 
   let now = () => {
     let date = new Date();
     return date.getHours() + ':' + date.getMinutes();
-  }
+  };
 
 
 });
