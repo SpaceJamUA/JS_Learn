@@ -9,7 +9,10 @@ npm install
 ``` 
 
 ### Start development
-Run `npm start` to start dev server
+To start, use the command
+```
+npm start
+```
 
 Dev server runs at 
 ```
