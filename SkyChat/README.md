@@ -1,4 +1,4 @@
-# SkyChat
+# Sky Chat
 
 ## General commands
 ### Install dependencies
