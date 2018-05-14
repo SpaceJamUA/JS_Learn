@@ -15,6 +15,10 @@ Dev server runs at
 ```
 http://localhost:3000/
 ```
+## Built With
+
+* [AngularJS](https://angularjs.org/) - The web framework used
+* [Socket.IO](https://socket.io/) - Сommunicating the server and client part
 
 ## Authors
 
