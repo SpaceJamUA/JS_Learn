@@ -1,0 +1,7 @@
+body {
+  padding-top: 10px;
+  margin: 0;
+  background-image: url("../img/main-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

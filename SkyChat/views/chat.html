@@ -1,0 +1,31 @@
+<div class="mainContent" ng-style="newStyle">
+  <div class="chat">
+    <div id="chatBody">
+      <div ng-repeat="db in dataBase" ng-class="db.id == socket ? 'anotherMsg' : 'msg' ">
+        <div>
+          <div class="user">
+            {{db.userName}}
+          </div>
+          <div class="msgBody">
+            <span>{{db.message}}</span>
+            <div class="date">
+                {{db.date}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class='animation'>
+      <div id='animation' class="none">
+        <span>{{joinNewUser}}</span>
+      </div>
+    </div>
+
+    <div class="form">
+      <textarea send-msg-btn ng-model="msgInput" rows="4"></textarea>
+      <button ng-click="send()"><span>&#10149;</span></button>
+    </div>
+  </div>
+</div>

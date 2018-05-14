@@ -1,0 +1,29 @@
+<html ng-app='app'>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>SkyСhat</title>
+  <link rel="shortcut icon" href="assets/img/SkyTittle.jpg" type="image/x-icon">
+
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.js"></script>
+  <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="assets/css/chat.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  
+  <script src="js/main.js"></script>
+  <script src="js/service/saveName.js"></script>
+  <script src="js/controllers/loginController.js"></script>
+  <script src="js/controllers/chatController.js"></script>
+
+</head>
+
+<body>
+  <div ng-view></div>
+</body>
+
+</html>

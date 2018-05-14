@@ -1,0 +1,52 @@
+.none{
+  display: none;
+}
+.animation{
+  position: absolute;
+  right: 0;
+  bottom: 10%;
+  width: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+}
+
+.newUser{
+  text-align: center;
+  display: block;
+  color: rgb(255, 255, 255);
+  background-color: rgb(83, 139, 134);
+  font-size: 20px;
+  padding: 5px 0px 5px 0px;
+  width: 250px;
+  transform: translate(100%);
+  margin-top: 2px;
+  animation-duration: 5s;
+  animation-name: slidein;
+  animation-direction: normal;
+}
+
+.newUser>span{
+  text-overflow: clip;
+}
+
+div .newUser:last-child{
+  border-radius: 10px 0 0 0;
+}
+
+@keyframes slidein {
+  from {
+    transform: translate(100%);
+  }
+  20%{
+    transform: translate(0);
+  }
+  80% {
+    transform: translate(0);
+  }
+  to{
+    transform: translate(100%);
+    display: none;
+  }
+}

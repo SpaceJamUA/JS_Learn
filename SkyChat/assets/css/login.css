@@ -1,0 +1,100 @@
+.joinForm {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  align-content: center;
+}
+.joinForm>div {
+  background-image: url("../img/log-background.jpg" );
+  background-position: center;
+  background-size: cover;
+  background-repeat:no-repeat;
+  padding: 20px;
+  height: 50%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.joinFormHeader{
+  padding: 10px;
+  color: rgb(110, 110, 110);
+  font-size: 20px;
+  text-align: center;
+  height: 40%;
+}
+.joinForm>div>form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.joinForm>div>form>input{
+  font-size: 20px;
+  width: 80%;
+  padding: 3px;
+}
+
+.joinForm>div>form>button{
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 20px 30px;
+  margin-top: 40px;
+  position: relative;
+  color: white;
+  border: 1px solid rgba(255,255,255,.4);
+  background: none;
+  font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.joinForm>div>form>button:before,
+.joinForm>div>form>button:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  box-sizing: border-box;
+}
+.joinForm>div>form>button:before {
+  bottom: 0;
+  left: 0;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  transition: 0s ease opacity .8s, .2s ease width .4s, .2s ease height .6s;
+}
+.joinForm>div>form>button:after {
+  top: 0;
+  right: 0;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  transition: 0s ease opacity .4s, .2s ease width , .2s ease height .2s;
+}
+.joinForm>div>form>button:hover:before,
+.joinForm>div>form>button:hover:after{
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+}
+.joinForm>div>form>button:hover:before {transition: 0s ease opacity 0s, .2s ease height, .2s ease width .2s;}
+.joinForm>div>form>button:hover:after {transition: 0s ease opacity .4s, .2s ease height .4s , .2s ease width .6s;}
+.joinForm>div>form>button:hover {background: rgba(255,255,255,.2);}
+
+@media  (max-width: 840px){
+  .joinForm>div{
+    width: 90%;
+    height: 80%;
+  }
+}
+@media  (max-width: 1344px){
+  .joinForm>div{
+    width: 50%;
+    height: 70%;
+  }
+}
